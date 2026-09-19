@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+:root {
+  --bg-1: #FDF6E9;
+  --bg-2: #FFFBF3;
+  --ink: #2B2118;
+  --ink-soft: #7A6A56;
+  --teal: #C97A2B;
+  --teal-dark: #9C5A1D;
+  --teal-tint: #FBEBD6;
+  --amber: #2F6B4F;
+  --amber-tint: #E3F1E8;
+  --indigo: #4F5FE0;
+  --indigo-tint: #EBEDFD;
+  --danger: #B5442E;
+  --danger-tint: #FBE9E4;
+  --card-shadow: 0 20px 40px -12px rgba(43, 33, 24, 0.18);
+}
