@@ -1,12 +1,20 @@
-const API_BASE = import.meta.env.VITE_API_BASE || "";
+export const API_BASE = import.meta.env.VITE_API_BASE || "";
 
-export async function getUploadUrl(fileType) {
-  const res = await fetch(`${API_BASE}/get-upload-url`, {
+async function post(path, body) {
+  const res = await fetch(`${API_BASE}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fileType }),
+    body: JSON.stringify(body),
   });
-  return res.json();
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.error || data.message) {
+    throw new Error(data.error || data.message || `Request failed (${res.status})`);
+  }
+  return data;
+}
+
+export async function getUploadUrl(fileType) {
+  return post("/get-upload-url", { fileType });
 }
 
 export async function uploadToS3(uploadUrl, file, onProgress) {
@@ -23,10 +31,9 @@ export async function uploadToS3(uploadUrl, file, onProgress) {
 }
 
 export async function processNotice(fileKey, language) {
-  const res = await fetch(`${API_BASE}/process-notice`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fileKey, language }),
-  });
-  return res.json();
+  return post("/process-notice", { fileKey, language });
+}
+
+export async function processText(text, language) {
+  return post("/process-notice", { text, language });
 }

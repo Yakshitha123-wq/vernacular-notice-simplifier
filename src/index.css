@@ -5,14 +5,49 @@
   --bg-2: #FFFBF3;
   --ink: #2B2118;
   --ink-soft: #7A6A56;
-  --teal: #C97A2B;
-  --teal-dark: #9C5A1D;
-  --teal-tint: #FBEBD6;
-  --amber: #2F6B4F;
-  --amber-tint: #E3F1E8;
+
+  --rust: #AF6018;
+  --rust-dark: #9C5A1D;
+  --rust-tint: #FBEBD6;
+
+  --forest: #2F6B4F;
+  --forest-tint: #E3F1E8;
+
   --indigo: #4F5FE0;
   --indigo-tint: #EBEDFD;
+
   --danger: #B5442E;
   --danger-tint: #FBE9E4;
+
   --card-shadow: 0 20px 40px -12px rgba(43, 33, 24, 0.18);
+
+  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans", Arial, sans-serif;
+  --font-bn: "Noto Sans Bengali", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-te: "Noto Sans Telugu", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg-1);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  background: var(--bg-2);
+  border: 1px solid rgba(43, 33, 24, 0.08);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.font-bn {
+  font-family: var(--font-bn);
+}
+
+.font-te {
+  font-family: var(--font-te);
 }
