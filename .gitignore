@@ -32,3 +32,4 @@ backend/deploy/packaged-*.yaml
 backend/__pycache__/
 backend/*.pyc
 backend/.DS_Store
+backend/CONTEXT.md
