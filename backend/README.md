@@ -4,7 +4,7 @@
 
 Live backend for the **First Commit** hackathon (WeMakeDevs Bharat Builds Tour, Sep 17–20 2026, Ship It track).
 
-Takes a **photo or pasted text** of an official Bengali / Telugu / Hindi civic or legal notice and returns:
+Takes a **photo or pasted text** of an official Bengali or Telugu civic or legal notice and returns:
 
 - a plain-language simplified summary,
 - structured action steps (what to do / what not to do),
@@ -25,7 +25,7 @@ Base: `https://rcfb7kr4x0.execute-api.ap-south-1.amazonaws.com/prod`
 | GET | `/notice/{id}` | — | stored notice |
 | GET/POST | `/tts?language=bn&text=...` | query params | `audio/mpeg` MP3 |
 
-Supported `language` codes: `bn` (Bengali), `te` (Telugu), `hi` (Hindi).
+Supported `language` codes: `bn` (Bengali), `te` (Telugu).
 
 ### Flattened response contract
 
@@ -52,7 +52,7 @@ Frontend (Amplify + React)
    ▼
 API Gateway (ap-south-1) ──► Lambda (Python 3.12, 1024MB, 300s)
    ├── POST /process-notice  {text,language} or {fileKey,language}
-   │     ├── Image (en/hi)  → Amazon Textract OCR
+   │     ├── Image (en)     → Amazon Textract OCR
    │     ├── Image (bn/te)  → bundled Tesseract OCR (ben/tel traineddata)
    │     └── Text           → passed straight through
    │
@@ -62,7 +62,7 @@ API Gateway (ap-south-1) ──► Lambda (Python 3.12, 1024MB, 300s)
    │       └─ Groq fallback (qwen/qwen3.8-27b) when Bedrock is unavailable
    │
    │     Audio:
-   │       Edge TTS server-side (/tts) for bn/te/hi
+   │       Edge TTS server-side (/tts) for bn/te
    │       Amazon Polly for English if configured
    │
    │     Storage:
@@ -137,7 +137,7 @@ Our submission is **deployed on AWS**:
 - **AWS Amplify** hosts the frontend.
 - **API Gateway + Lambda + S3 + DynamoDB** run the backend.
 - **Amazon Bedrock** is the *intended* LLM path (Claude 4.5 / Nova).
-- **Amazon Textract** is the *intended* OCR path for English/Hindi notices.
+- **Amazon Textract** is the *intended* OCR path for English notices.
 - **Amazon Polly** is the *intended* audio path for supported languages.
 
 ### Current constraints (account-level, not code-level)

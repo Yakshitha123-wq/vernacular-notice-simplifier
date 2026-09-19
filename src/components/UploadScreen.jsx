@@ -86,7 +86,7 @@ function UploadScreen({ onUpload, onTextSubmit, error, language, setLanguage, up
 
             {(language === 'bn' || language === 'te') && mode === 'photo' && (
               <p className="text-sm mb-4 px-4 py-3 rounded-xl" style={{ backgroundColor: 'var(--rust-tint)', color: 'var(--rust-dark)' }}>
-                For Bengali or Telugu notices, please paste the text. The photo reader works best for English or Hindi notices right now.
+                For Bengali or Telugu notices, please paste the text. The photo reader works best for English notices right now.
               </p>
             )}
 

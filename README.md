@@ -1,6 +1,6 @@
 # Vernacular Notice Simplifier — Frontend
 
-Mobile-first web app that explains **Bengali, Telugu, and Hindi** civic/legal notices in plain language — and reads them aloud.
+Mobile-first web app that explains **Bengali and Telugu** civic/legal notices in plain language — and reads them aloud.
 
 Built for **WeMakeDevs Bharat Builds Tour — First Commit** hackathon, Sep 17–20 2026.
 
@@ -10,7 +10,7 @@ Built for **WeMakeDevs Bharat Builds Tour — First Commit** hackathon, Sep 17�
 
 ## What it does
 
-1. Choose a language: **বাংলা (Bengali) / తెలుగు (Telugu) / हिंदी (Hindi)**.
+1. Choose a language: **বাংলা (Bengali) / తెలుగు (Telugu)**.
 2. Upload a notice photo **or paste the notice text**.
 3. Get a simple summary:
    - What kind of notice it is
@@ -74,7 +74,7 @@ Amplify auto-deploys when `main` is pushed to GitHub.
 | **AWS Lambda** | Runs the Python backend that OCRs, simplifies, and stores notices |
 | **Amazon S3** | Stores uploaded notice images and generated MP3 audio files |
 | **Amazon DynamoDB** | Saves simplified notices so they can be fetched again by ID |
-| **Amazon Textract** *(fallback)* | OCR for English/Hindi notice photos |
+| **Amazon Textract** *(fallback)* | OCR for English notice photos |
 | **Amazon Bedrock** *(fallback)* | AI simplification when the AWS account has model access |
 
 > The live backend currently uses a **Groq fallback** for simplification because the team's AWS account is still waiting for AWS verification / billing activation to invoke Bedrock reliably. All AWS infrastructure above is deployed and running; only the paid-model data-plane calls are gated by AWS account approval.
