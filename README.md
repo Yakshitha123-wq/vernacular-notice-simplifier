@@ -5,7 +5,7 @@ Mobile-first web app that explains **Bengali, Telugu, and Hindi** civic/legal no
 Built for **WeMakeDevs Bharat Builds Tour — First Commit** hackathon, Sep 17–20 2026.
 
 - **Live demo:** https://main.d1ikau4tnjl5sq.amplifyapp.com/
-- **Backend repo:** *(ask the team for the link — Arnab's backend will be pushed separately)*
+- **Backend:** see the `backend/` folder in this repo
 - **Live API:** `https://rcfb7kr4x0.execute-api.ap-south-1.amazonaws.com/prod`
 
 ## What it does

@@ -1,0 +1,85 @@
+{
+  "description": "Evaluation set of 10 representative civic/legal notices authored by the team as test fixtures for the pipeline. Categories mirror real e-paper public-notice sections.",
+  "manifest": [
+    {
+      "file": "bn/bn_01_water_supply.txt",
+      "language": "bn",
+      "category": "Utility Outage",
+      "source_type": "KMC water supply notice",
+      "key_points": ["Water cut Friday 9am-9pm", "Store water in advance", "Tankers available"],
+      "deadlines": []
+    },
+    {
+      "file": "bn/bn_02_dengue.txt",
+      "language": "bn",
+      "category": "Public Health Advisory",
+      "source_type": "KMC health department advisory",
+      "key_points": ["Remove standing water", "Get fever tested", "No self-medication"],
+      "deadlines": []
+    },
+    {
+      "file": "bn/bn_03_land_acquisition.txt",
+      "language": "bn",
+      "category": "Eviction/Relocation",
+      "source_type": "Land acquisition notice",
+      "key_points": ["File claim in 30 days", "Bring ownership documents", "Compensation fixed by district"],
+      "deadlines": ["<30 days from publication>"]
+    },
+    {
+      "file": "bn/bn_04_property_tax.txt",
+      "language": "bn",
+      "category": "Tax/Fine",
+      "source_type": "KMC property tax reminder",
+      "key_points": ["Pay by Sep 30 2026", "10% monthly penalty after", "Pay online or ward office"],
+      "deadlines": ["2026-09-30"]
+    },
+    {
+      "file": "bn/bn_05_ration_card.txt",
+      "language": "bn",
+      "category": "Financial Scheme",
+      "source_type": "Ration card update notice",
+      "key_points": ["Update Aadhaar by Oct 15 2026", "Penalty: rations stopped", "Visit food security office"],
+      "deadlines": ["2026-10-15"]
+    },
+    {
+      "file": "te/te_01_power_cut.txt",
+      "language": "te",
+      "category": "Utility Outage",
+      "source_type": "GHMC power maintenance notice",
+      "key_points": ["Power cut tomorrow 9am-5pm", "Charge devices in advance", "Hospitals get backup"],
+      "deadlines": []
+    },
+    {
+      "file": "te/te_02_pension.txt",
+      "language": "te",
+      "category": "Financial Scheme",
+      "source_type": "Telangana pension disbursement notice",
+      "key_points": ["Pension paid from 5th of each month", "Link Aadhaar or suspended", "Visit Mee Seva"],
+      "deadlines": []
+    },
+    {
+      "file": "te/te_03_road_work.txt",
+      "language": "te",
+      "category": "Traffic",
+      "source_type": "GHMC road work diversion notice",
+      "key_points": ["Roads partially closed weekend", "Heavy vehicles diverted", "Depart 30 min early"],
+      "deadlines": []
+    },
+    {
+      "file": "te/te_04_voter_list.txt",
+      "language": "te",
+      "category": "Other Civic Notice",
+      "source_type": "Election Commission voter list correction",
+      "key_points": ["File Form-6/7/8 by 31st", "Late applications rejected"],
+      "deadlines": ["<end of current month>"]
+    },
+    {
+      "file": "te/te_05_health_advisory.txt",
+      "language": "te",
+      "category": "Public Health Advisory",
+      "source_type": "State health department advisory",
+      "key_points": ["No standing water", "Full-sleeve clothes", "Hospital for fever"],
+      "deadlines": []
+    }
+  ]
+}

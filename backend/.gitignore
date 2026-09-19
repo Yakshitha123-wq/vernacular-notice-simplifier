@@ -1,0 +1,19 @@
+# --- Secrets / credentials (never commit) ---
+*.csv
+*.rtf
+!prompts/*.txt
+deploy/.groq.env
+.env
+*.env
+
+# --- Python / venv ---
+.venv/
+__pycache__/
+*.pyc
+
+# --- AWS deploy artifacts ---
+deploy/src.zip
+deploy/packaged-*.yaml
+
+# --- OS noise ---
+.DS_Store

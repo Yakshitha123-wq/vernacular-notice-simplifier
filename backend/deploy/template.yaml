@@ -1,0 +1,161 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Vernacular Legal & Civic Notice Simplifier - backend pipeline (Arnab)
+
+Parameters:
+  AudioBucketName:
+    Type: String
+  SourceBucketName:
+    Type: String
+  BedrockModelId:
+    Type: String
+    Default: eu.anthropic.claude-sonnet-4-5-20250929-v1:0
+  BedrockRegion:
+    Type: String
+    Default: eu-north-1
+  BedrockRegions:
+    Type: String
+    Default: eu-north-1,eu-west-1,eu-central-1,eu-west-3,eu-south-1,eu-south-2
+  GroqApiKey:
+    Type: String
+    Default: ""
+    NoEcho: true
+  GroqModel:
+    Type: String
+    Default: qwen/qwen3.8-27b
+  GroqVisionModel:
+    Type: String
+    Default: ""
+  GroqBaseUrl:
+    Type: String
+    Default: https://api.groq.com/openai/v1
+  GroqMaxTokens:
+    Type: String
+    Default: "900"
+  GoogleVisionApiKey:
+    Type: String
+    Default: ""
+    NoEcho: true
+
+Resources:
+  NoticesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Notices
+      AttributeDefinitions:
+        - AttributeName: NoticeID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: NoticeID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  SourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref SourceBucketName
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods: [GET, PUT, HEAD]
+            AllowedOrigins: ["*"]
+            AllowedHeaders: ["*"]
+            ExposedHeaders: [ETag]
+            MaxAge: 3000
+
+  AudioBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref AudioBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  NoticesApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'*'"
+      EndpointConfiguration:
+        Type: REGIONAL
+      BinaryMediaTypes:
+        - "audio/mpeg"
+
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonTextractFullAccess
+        - arn:aws:iam::aws:policy/AmazonBedrockFullAccess
+        - arn:aws:iam::aws:policy/AmazonPollyFullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src
+      Handler: handler.lambda_handler
+      Runtime: python3.12
+      Timeout: 300
+      MemorySize: 1024
+      Role: !GetAtt PipelineRole.Arn
+      Environment:
+        Variables:
+          NOTICES_TABLE: !Ref NoticesTable
+          AUDIO_BUCKET: !Ref AudioBucket
+          SOURCE_BUCKET: !Ref SourceBucket
+          BEDROCK_MODEL_ID: !Ref BedrockModelId
+          BEDROCK_REGION: !Ref BedrockRegion
+          BEDROCK_REGIONS: !Ref BedrockRegions
+          GROQ_API_KEY: !Ref GroqApiKey
+          GROQ_MODEL: !Ref GroqModel
+          GROQ_VISION_MODEL: !Ref GroqVisionModel
+          GROQ_BASE_URL: !Ref GroqBaseUrl
+          GROQ_MAX_TOKENS: !Ref GroqMaxTokens
+          GOOGLE_VISION_API_KEY: !Ref GoogleVisionApiKey
+          TESSERACT_CMD: /var/task/tesseract/bin/tesseract
+          TESSDATA_PREFIX: /var/task/tesseract/tesseract/share/tessdata
+          TESSERACT_LIB: /var/task/tesseract/lib
+          VISION_FALLBACK: "true"
+      Events:
+        GetUploadUrl:
+          Type: Api
+          Properties:
+            RestApiId: !Ref NoticesApi
+            Path: /get-upload-url
+            Method: POST
+        ProcessNotice:
+          Type: Api
+          Properties:
+            RestApiId: !Ref NoticesApi
+            Path: /process-notice
+            Method: POST
+        GetNotice:
+          Type: Api
+          Properties:
+            RestApiId: !Ref NoticesApi
+            Path: /notice/{id}
+            Method: GET
+        Tts:
+          Type: Api
+          Properties:
+            RestApiId: !Ref NoticesApi
+            Path: /tts
+            Method: GET
+
+Outputs:
+  ApiEndpoint:
+    Value: !Sub "https://${NoticesApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
