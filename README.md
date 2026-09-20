@@ -101,7 +101,7 @@ This fallback keeps the app working end-to-end while the team's AWS account fini
 ## Team
 
 - Mannam Yakshitha — team lead / frontend
-- Padma — frontend
+- Kesireddy Padma — frontend
 - Arnab Acharya — backend / AWS pipeline
 - Ujaan Mukherjee — backend support / bug fixing
 
