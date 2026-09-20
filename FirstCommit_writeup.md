@@ -60,4 +60,4 @@ The current fallback tools (Tesseract, Edge TTS, Groq) run inside AWS infrastruc
 
 ## Team
 
-Mannam (lead / frontend), Padma (frontend), Arnab (backend / pipeline), Ujaan (backend support).
+Mannam (lead / frontend), Padma (frontend), Arnab Acharya (backend / pipeline), Ujaan Mukherjee (backend support / bug fixing).
