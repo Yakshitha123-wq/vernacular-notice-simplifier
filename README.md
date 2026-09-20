@@ -5,6 +5,7 @@ Mobile-first web app that explains **Bengali and Telugu** civic/legal notices in
 Built for **WeMakeDevs Bharat Builds Tour — First Commit** hackathon, Sep 17–20 2026.
 
 - **Live app:** https://main.d1ikau4tnjl5sq.amplifyapp.com/
+- **Demo video:** https://youtu.be/12-5LeDDCyc
 - **Source:** https://github.com/Yakshitha123-wq/vernacular-notice-simplifier
 - **Live API:** `https://rcfb7kr4x0.execute-api.ap-south-1.amazonaws.com/prod`
 - **Team writeup:** [`FirstCommit_writeup.md`](./FirstCommit_writeup.md)
