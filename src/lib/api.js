@@ -1,4 +1,6 @@
-export const API_BASE = import.meta.env.VITE_API_BASE || "";
+export const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  "https://rcfb7kr4x0.execute-api.ap-south-1.amazonaws.com/prod";
 
 async function post(path, body) {
   const res = await fetch(`${API_BASE}${path}`, {
