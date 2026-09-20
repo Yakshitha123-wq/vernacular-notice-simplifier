@@ -105,3 +105,9 @@ This fallback keeps the app working end-to-end while the team's AWS account fini
 - Arnab Acharya — backend / AWS pipeline
 - Ujaan Mukherjee — backend support / bug fixing
 
+## Credits
+
+We used AI coding assistants (including OpenCode/Kimi) to help debug, refactor, and draft documentation. The team reviewed and tested all generated code before committing.
+
+This project also relies on open-source and third-party software: React, Vite, Tailwind CSS, Lucide icons, Tesseract OCR, Microsoft Edge TTS, the Groq API (`qwen/qwen3.8-27b`), and the Python packages listed in `backend/requirements.txt`. AWS services are used under their respective terms. See `FirstCommit_writeup.md` for the full credits and license note.
+

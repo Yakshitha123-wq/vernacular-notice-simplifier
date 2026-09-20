@@ -61,3 +61,20 @@ The current fallback tools (Tesseract, Edge TTS, Groq) run inside AWS infrastruc
 ## Team
 
 Mannam Yakshitha (lead / frontend), Padma (frontend), Arnab Acharya (backend / pipeline), Ujaan Mukherjee (backend support / bug fixing).
+
+## Tools, credits, and licenses
+
+We believe in being transparent about what we built ourselves and what we stood on.
+
+**AI coding assistants:** We used AI coding assistants (including OpenCode/Kimi) to help debug, refactor, and draft documentation. All generated code was reviewed, tested, and adapted by the team before being committed.
+
+**Open-source and third-party software:**
+- **React 19, Vite, Tailwind CSS 4, Lucide icons** — frontend framework, build tooling, styling, and icons.
+- **Tesseract OCR** — open-source OCR engine bundled inside the Lambda for Bengali/Telugu script recognition.
+- **Microsoft Edge TTS** — open-source text-to-speech synthesizer bundled inside the Lambda for Bengali/Telugu audio.
+- **Groq API** — fallback LLM provider using the `qwen/qwen3.8-27b` model for text simplification when AWS Bedrock is unavailable.
+- **Python packages** — `boto3`, `botocore`, `Pillow`, `numpy`, and others listed in `backend/requirements.txt`.
+
+**AWS services:** AWS Amplify, Amazon API Gateway, AWS Lambda, Amazon S3, Amazon DynamoDB, Amazon Bedrock, Amazon Textract, and Amazon Polly. These are used under their respective AWS terms and the AWS Free Tier / student credits.
+
+All third-party code and services are used in compliance with their licenses. Frontend dependencies are listed in `package.json`; backend dependencies are listed in `backend/requirements.txt`.
