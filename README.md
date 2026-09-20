@@ -104,10 +104,3 @@ This fallback keeps the app working end-to-end while the team's AWS account fini
 - Arnab — backend / AWS pipeline
 - Ujaan — backend support
 
-## Submission checklist
-
-- [x] Public repository
-- [x] Live deployed app
-- [x] Team writeup (`FirstCommit_writeup.md`)
-- [x] AWS Builder Center blog (linked above)
-- [ ] Final 2–3 minute demo video on YouTube (to be added by the team)
