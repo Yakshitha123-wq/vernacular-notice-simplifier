@@ -96,6 +96,7 @@ This fallback keeps the app working end-to-end while the team's AWS account fini
 - **Photo upload for Bengali/Telugu** uses bundled Tesseract OCR inside Lambda. It works, but accuracy depends on image quality.
 - **Audio generation** for bn/te is served by the backend's Edge-TTS route rather than Amazon Polly, because Polly does not offer Bengali/Telugu voices.
 - **Backend account gates:** Bedrock and Textract paid-service access is pending AWS account verification. The fallback LLM/OCR/audio stack keeps the app working while that clears.
+- **Fallback generation variability:** The Groq fallback can occasionally insert a stray foreign word or garbled phrase into one action step, even when the same input is repeated. We have lowered the sampling temperature to 0 and tightened the prompt to reduce this. Results are best for property-tax, ration-card, health-advisory, eviction, and traffic notices.
 
 ## Team
 

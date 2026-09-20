@@ -36,6 +36,8 @@ The project is a mobile-first web app built over the First Commit hackathon week
 
 **Resilience:** We hit several AWS account-level gates during the weekend (Bedrock `Operation not allowed`, Textract `SubscriptionRequiredException`, Claude `INVALID_PAYMENT_INSTRUMENT`). Rather than stop, we added region failover, provider fallback, and bundled open-source tools so the app would keep working end-to-end.
 
+**Known limitation:** Because the live demo currently relies on the Groq fallback, rare outputs can include a stray foreign word or garbled phrase in one action step, even for identical input. We mitigated this by setting Groq's sampling temperature to 0 and adding a strict "respond only in the target language" rule to the prompt. The app performs most reliably on property-tax, ration-card, health-advisory, eviction, and traffic notices.
+
 ## Where AWS fits
 
 AWS is the platform the app runs on:
