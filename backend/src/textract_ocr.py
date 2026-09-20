@@ -27,8 +27,3 @@ def _join_blocks(response):
         if block.get("BlockType") == "LINE"
     ]
     return "\n".join(lines)
-
-
-def estimates_page_count(text):
-    words = len(text.split())
-    return max(1, (words + 449) // 450)

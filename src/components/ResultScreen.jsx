@@ -75,7 +75,7 @@ function ResultScreen({ data, onReset, language, setLanguage }) {
           </>
         ) : (
           <p className={`text-base leading-relaxed p-4 rounded-xl ${language === 'te' ? 'font-te' : 'font-bn'}`} style={{ color: 'var(--ink-soft)', backgroundColor: '#F8FAF9' }}>
-            {data.original_text}
+            {data.raw_text}
           </p>
         )}
 

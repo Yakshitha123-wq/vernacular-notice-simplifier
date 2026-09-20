@@ -100,7 +100,14 @@ def _user_prompt(raw_text, target_language):
         "actionable_steps, deadlines, target_audience.\n\n"
         'IMPORTANT: "deadlines" must be an array of plain date strings only, '
         'formatted like ["2026-09-30"] — do not return objects or extra fields '
-        "inside deadlines.\n\n"
+        "inside deadlines. Never invent or complete a date: only include one if the "
+        "notice states a complete day, month, and year. A recurring pattern with no "
+        "year (e.g. \"every month on the 5th\") is not a deadline — leave it out of "
+        "deadlines rather than turning it into a made-up calendar date.\n\n"
+        f"IMPORTANT: Write every field entirely in {language}. Do not let any word "
+        "from another language (English, Thai, or otherwise) slip into any single "
+        "actionable_steps entry or any other field — only exact dates/amounts may "
+        "stay as written.\n\n"
         f'Notice text: "{raw_text}"'
     )
 

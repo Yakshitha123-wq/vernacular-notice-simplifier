@@ -118,4 +118,4 @@ def _adaptive_threshold(image):
             threshold = mean * (1 - THRESHOLD_K) + 0.15 * stddev
             block_img = array[top:bottom, left:right]
             binary[top:bottom, left:right][block_img >= threshold] = 255
-    return Image.fromarray(255 - binary)
+    return Image.fromarray(binary)
