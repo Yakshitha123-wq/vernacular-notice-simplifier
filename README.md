@@ -1,12 +1,14 @@
-# Vernacular Notice Simplifier — Frontend
+# Vernacular Notice Simplifier
 
 Mobile-first web app that explains **Bengali and Telugu** civic/legal notices in plain language — and reads them aloud.
 
 Built for **WeMakeDevs Bharat Builds Tour — First Commit** hackathon, Sep 17–20 2026.
 
-- **Live demo:** https://main.d1ikau4tnjl5sq.amplifyapp.com/
-- **Backend:** see the `backend/` folder in this repo
+- **Live app:** https://main.d1ikau4tnjl5sq.amplifyapp.com/
+- **Source:** https://github.com/Yakshitha123-wq/vernacular-notice-simplifier
 - **Live API:** `https://rcfb7kr4x0.execute-api.ap-south-1.amazonaws.com/prod`
+- **Team writeup:** [`FirstCommit_writeup.md`](./FirstCommit_writeup.md)
+- **Blog (Best Blog track):** https://builder.aws.com/content/3JZzl9VBUolKkJ1ybEo4IXlPpTi/notice-made-simple
 
 ## What it does
 
@@ -35,11 +37,13 @@ cd vernacular-notice-simplifier
 npm install
 ```
 
-Create a local environment file:
+Create a local environment file from the example:
 
 ```bash
 cp .env.example .env.local
 ```
+
+`.env.local` is gitignored. The production build falls back to the live API URL in `src/lib/api.js`, so the deployed app does not depend on this file.
 
 Then start the dev server:
 
@@ -74,16 +78,24 @@ Amplify auto-deploys when `main` is pushed to GitHub.
 | **AWS Lambda** | Runs the Python backend that OCRs, simplifies, and stores notices |
 | **Amazon S3** | Stores uploaded notice images and generated MP3 audio files |
 | **Amazon DynamoDB** | Saves simplified notices so they can be fetched again by ID |
-| **Amazon Textract** *(fallback)* | OCR for English notice photos |
-| **Amazon Bedrock** *(fallback)* | AI simplification when the AWS account has model access |
+| **Amazon Textract** *(intended)* | OCR for English/Hindi notice photos once account access is active |
+| **Amazon Bedrock** *(intended)* | AI simplification once model access is active on the team account |
 
-> The live backend currently uses a **Groq fallback** for simplification because the team's AWS account is still waiting for AWS verification / billing activation to invoke Bedrock reliably. All AWS infrastructure above is deployed and running; only the paid-model data-plane calls are gated by AWS account approval.
+### Current working path
+
+The live backend currently uses:
+- **Groq** (Qwen) for text simplification,
+- **Tesseract** (bundled in Lambda) for Bengali/Telugu OCR,
+- **Microsoft Edge TTS** for Bengali/Telugu audio,
+- all running inside the **AWS Lambda / API Gateway** infrastructure.
+
+This fallback keeps the app working end-to-end while the team's AWS account finishes verification / billing activation for Bedrock and Textract.
 
 ## Known limitations
 
-- **Photo upload for Bengali/Telugu** depends on the backend OCR. Right now the frontend honestly tells users to *paste text* for bn/te because the backend's AWS Textract does not read those scripts, and our fallback OCR path is active only on the backend. The app still lets users try a photo if they prefer.
-- **Audio generation** for bn/te is served by our backend's Edge-TTS route rather than Amazon Polly, because Polly does not offer Bengali/Telugu voices.
-- **Backend account gates:** Bedrock/Textract paid-service access is pending AWS account verification on one team account. The fallback LLM keeps the app working while that clears.
+- **Photo upload for Bengali/Telugu** uses bundled Tesseract OCR inside Lambda. It works, but accuracy depends on image quality.
+- **Audio generation** for bn/te is served by the backend's Edge-TTS route rather than Amazon Polly, because Polly does not offer Bengali/Telugu voices.
+- **Backend account gates:** Bedrock and Textract paid-service access is pending AWS account verification. The fallback LLM/OCR/audio stack keeps the app working while that clears.
 
 ## Team
 
@@ -91,3 +103,11 @@ Amplify auto-deploys when `main` is pushed to GitHub.
 - Padma — frontend
 - Arnab — backend / AWS pipeline
 - Ujaan — backend support
+
+## Submission checklist
+
+- [x] Public repository
+- [x] Live deployed app
+- [x] Team writeup (`FirstCommit_writeup.md`)
+- [x] AWS Builder Center blog (linked above)
+- [ ] Final 2–3 minute demo video on YouTube (to be added by the team)
