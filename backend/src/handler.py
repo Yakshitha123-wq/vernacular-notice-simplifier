@@ -139,6 +139,8 @@ def _run_pipeline(raw_text=None, remote=None, target_language="bn"):
     audio_key = None
     audio_url = None
     try:
+        if not config.polly_supported(target_language):
+            raise RuntimeError(f"Polly has no voice for language '{target_language}'")
         summary_text = simplified.get("simplified_summary") or raw_text
         audio_key = polly_speech.synthesize_audio(polly, summary_text, target_language, s3)
         audio_url = polly_speech.bucket_url(s3, audio_key)
@@ -168,9 +170,10 @@ def _extract_from_remote(s3, textract, remote, target_language="bn"):
     if _is_image_key(key):
         with tempfile.NamedTemporaryFile(delete=False) as raw_file:
             s3.download_file(bucket, key, raw_file.name)
-            with open(raw_file.name, "rb") as fh:
-                image_bytes = fh.read()
-            os.unlink(raw_file.name)
+            temp_path = raw_file.name
+        with open(temp_path, "rb") as fh:
+            image_bytes = fh.read()
+        os.unlink(temp_path)
         processed_bytes, _ = preprocess.preprocess_image(image_bytes)
         # Textract does not support Bengali/Telugu; use Tesseract directly for those.
         if target_language in ("bn", "te"):
@@ -187,7 +190,7 @@ def _extract_from_remote(s3, textract, remote, target_language="bn"):
             try:
                 import tesseract_ocr
 
-                raw_text = tesseract_ocr.extract_text(image_bytes, target_language)
+                raw_text = tesseract_ocr.extract_text(processed_bytes, target_language)
             except Exception as exc:
                 print(f"[warn] Tesseract OCR failed: {exc}")
             # 2) Optional Google Cloud Vision if key is configured
@@ -195,7 +198,7 @@ def _extract_from_remote(s3, textract, remote, target_language="bn"):
                 try:
                     import google_vision_ocr
 
-                    raw_text = google_vision_ocr.extract_text(image_bytes)
+                    raw_text = google_vision_ocr.extract_text(processed_bytes)
                 except Exception as exc:
                     print(f"[warn] Google Vision OCR failed: {exc}")
             # 3) Last resort: Bedrock/Groq vision fallback

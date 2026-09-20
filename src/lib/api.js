@@ -9,8 +9,8 @@ async function post(path, body) {
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok || data.error || data.message) {
-    throw new Error(data.error || data.message || `Request failed (${res.status})`);
+  if (!res.ok || data.error) {
+    throw new Error(data.error || `Request failed (${res.status})`);
   }
   return data;
 }

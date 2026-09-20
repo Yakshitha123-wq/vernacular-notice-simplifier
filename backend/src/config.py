@@ -88,10 +88,6 @@ def language_name(language):
     return names.get((language or "en").lower()[:2], "English")
 
 
-def textract_use_async():
-    return env("TEXTRACT_ASYNC", "false").lower() in ("1", "true", "yes")
-
-
 def vision_fallback_enabled():
     return env("VISION_FALLBACK", "true").lower() not in ("0", "false", "no")
 
@@ -112,6 +108,15 @@ def polly_language_code(language):
         "hi": "hi-IN",
     }
     return codes.get((language or "en").lower()[:2], "hi-IN")
+
+
+# AWS Polly has no Bengali or Telugu voices; only skip the (guaranteed-to-fail) API
+# call for those. Callers fall back to the edge_tts-backed /tts endpoint instead.
+_POLLY_SUPPORTED_LANGUAGES = {"hi", "en"}
+
+
+def polly_supported(language):
+    return (language or "").lower()[:2] in _POLLY_SUPPORTED_LANGUAGES
 
 
 def prompt_file():

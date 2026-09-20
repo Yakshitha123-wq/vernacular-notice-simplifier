@@ -34,7 +34,7 @@ function App() {
           clearInterval(t);
           startProcessing();
           setTimeout(() => {
-            setResult({ category: "Tax/Fine", simplified_summary: "Pay your property tax before 30 September.", actionable_steps: ["Pay online or at the ward office"], deadlines: ["2026-09-30"], target_audience: "Property owners", original_text: file.type, audio_url: null });
+            setResult({ category: "Tax/Fine", simplified_summary: "Pay your property tax before 30 September.", actionable_steps: ["Pay online or at the ward office"], deadlines: ["2026-09-30"], target_audience: "Property owners", raw_text: file.type, audio_url: null });
             setScreen('result');
           }, 2200);
         }

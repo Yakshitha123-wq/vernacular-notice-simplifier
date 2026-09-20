@@ -207,6 +207,8 @@ class PipelineTest(unittest.TestCase):
 
     @mock.patch.object(bedrock_simplify, "transcribe_image_with_failover")
     def test_vision_fallback_skipped_when_textract_has_text(self, mock_transcribe):
+        # Textract is only consulted for languages other than bn/te (see
+        # _extract_from_remote), so use "en" to exercise that branch.
         sample = make_notice_image()
         s3 = mock.Mock()
         s3.download_file.side_effect = lambda b, k, p: open(p, "wb").write(sample)
@@ -214,7 +216,7 @@ class PipelineTest(unittest.TestCase):
         textract.detect_document_text.return_value = {
             "Blocks": [{"BlockType": "LINE", "Text": "Water supply will stop on Friday."}]
         }
-        out = _extract_from_remote(s3, textract, ("b", "photo.jpg"), "bn")
+        out = _extract_from_remote(s3, textract, ("b", "photo.jpg"), "en")
         self.assertEqual(out, "Water supply will stop on Friday.")
         mock_transcribe.assert_not_called()
 
@@ -261,11 +263,16 @@ class PipelineTest(unittest.TestCase):
         self.assertEqual(payload["category"], "Utility Outage")
         self.assertEqual(payload["simplified_summary"], "পানি সরবরাহ বন্ধ থাকবে। আগে থেকে পানি জমা রাখুন।")
         self.assertTrue(payload["notice_id"].startswith("NOT-"))
-        self.assertIn("audio", payload["audio_url"])
-        self.assertIsNotNone(payload["audio_url"])
+        # AWS Polly has no Bengali voice, so audio synthesis is skipped for "bn"
+        # and the frontend falls back to the edge_tts-backed /tts endpoint instead.
+        self.assertIsNone(payload["audio_url"])
 
+    @mock.patch("tesseract_ocr.extract_text")
     @mock.patch("boto3.client")
-    def test_full_pipeline_filekey_language(self, mock_boto):
+    def test_full_pipeline_filekey_language(self, mock_boto, mock_tesseract):
+        # Textract does not support Telugu, so this exercises the Tesseract
+        # fallback (see _extract_from_remote).
+        mock_tesseract.return_value = "Water supply will stop on Friday."
         s3_client = mock.Mock()
         sample = make_notice_image()
 
@@ -291,8 +298,12 @@ class PipelineTest(unittest.TestCase):
         self.assertIn("Water supply will stop", payload["raw_text"])
         s3_client.download_file.assert_called_once()
 
+    @mock.patch("tesseract_ocr.extract_text")
     @mock.patch("boto3.client")
-    def test_full_pipeline_s3_event(self, mock_boto):
+    def test_full_pipeline_s3_event(self, mock_boto, mock_tesseract):
+        # S3-triggered notices default to "bn", which also skips Textract and
+        # relies on the Tesseract fallback.
+        mock_tesseract.return_value = "Water supply will stop on Friday."
         s3_client = mock.Mock()
         sample_image = make_notice_image()
 

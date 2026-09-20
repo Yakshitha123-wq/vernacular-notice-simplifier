@@ -39,6 +39,6 @@ def sniff_image_format(image_bytes):
         return "bmp"
     if image_bytes[:2] == b"\xff\xd8":
         return "jpeg"
-    if image_bytes[:4] == b"webp":
+    if image_bytes[:4] == b"RIFF" and image_bytes[8:12] == b"WEBP":
         return "webp"
     return "jpeg"

@@ -107,7 +107,7 @@ function AudioPlayer({ audioUrl, text = "", language = "bn", setLanguage }) {
     if (playing) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play()?.catch(() => {});
     }
     setPlaying((p) => !p);
   };
