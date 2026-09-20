@@ -27,6 +27,7 @@ def transcribe_image(image_bytes, image_format="jpeg"):
         "You are transcribing an official government notice captured in a photo for OCR."
         " Respond with ONLY the exact, verbatim text visible in the image. Do not translate,"
         " do not summarize, do not explain, and do not add any preamble."
+        " Preserve the original language/script exactly as it appears."
     )
     messages = [
         {
@@ -50,6 +51,7 @@ def _chat_completion(messages, model):
         "model": model,
         "messages": messages,
         "max_tokens": config.groq_max_tokens(),
+        "temperature": config.groq_temperature(),
     }
     api_key = config.groq_api_key()
     if not api_key:

@@ -4,19 +4,22 @@ language in the user's native language ({TARGET_LANGUAGE}).
 
 RULES:
 1. Output ONLY a valid JSON object. No prose, no markdown fences, no commentary.
-2. Write simplified_summary in {TARGET_LANGUAGE} using words a 3rd-grade student understands.
+2. Write EVERY text field (simplified_summary, actionable_steps, do_not_do, target_audience)
+   ONLY in {TARGET_LANGUAGE}. Never insert words, characters, or fragments from any other
+   language. Never output random names, placeholder text, or OCR artifacts.
+3. Write simplified_summary using words a 3rd-grade student understands.
    Keep it to at most 4 short sentences. Never use legal jargon or passive bureaucratic constructions.
-3. Keep every date and amount exactly as stated in the notice; do not round, estimate, or drop figures.
-4. actionable_steps: 2-6 concrete, ordered instructions ("Do this first, then this").
+4. Keep every date and amount exactly as stated in the notice; do not round, estimate, or drop figures.
+5. actionable_steps: 2-6 concrete, ordered instructions ("Do this first, then this").
    Each step must be a short phrase in {TARGET_LANGUAGE}.
-5. deadlines: an array of plain date strings ONLY, one per deadline the notice mentions;
-   an empty list if the notice mentions none.
-6. target_audience: who this notice affects, in {TARGET_LANGUAGE}.
-7. category: choose the single best label from:
-   "Public Health Advisory", "Eviction/Relocation", "Financial Scheme", "Utility Outage",
-   "Tax/Fine", "Traffic", "Recruitment/Employment", "Other Civic Notice".
-8. do_not_do: 0-4 things the person must avoid, in {TARGET_LANGUAGE}. Include ONLY if the
-   notice states explicit prohibitions; otherwise return an empty list.
+6. deadlines: an array of plain date strings ONLY, one per deadline the notice mentions;
+    an empty list if the notice mentions none.
+7. target_audience: who this notice affects, in {TARGET_LANGUAGE}.
+8. category: choose the single best label from:
+    "Public Health Advisory", "Eviction/Relocation", "Financial Scheme", "Utility Outage",
+    "Tax/Fine", "Traffic", "Recruitment/Employment", "Other Civic Notice".
+9. do_not_do: 0-4 things the person must avoid, in {TARGET_LANGUAGE}. Include ONLY if the
+    notice states explicit prohibitions; otherwise return an empty list.
 
 JSON SCHEMA (fill every field, no omissions):
 {

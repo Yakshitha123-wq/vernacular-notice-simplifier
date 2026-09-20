@@ -71,6 +71,10 @@ def groq_max_tokens():
     return int(env("GROQ_MAX_TOKENS", "900"))
 
 
+def groq_temperature():
+    return float(env("GROQ_TEMPERATURE", "0"))
+
+
 def groq_enabled():
     return bool(groq_api_key())
 
