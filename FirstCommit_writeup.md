@@ -56,6 +56,7 @@ The current fallback tools (Tesseract, Edge TTS, Groq) run inside AWS infrastruc
 ## Live links
 
 - App: https://main.d1ikau4tnjl5sq.amplifyapp.com
+- Demo video: https://youtu.be/12-5LeDDCyc
 - Source: https://github.com/Yakshitha123-wq/vernacular-notice-simplifier
 
 ## Team
