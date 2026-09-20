@@ -66,7 +66,7 @@ Mannam Yakshitha (lead / frontend), Padma (frontend), Arnab Acharya (backend / p
 
 We believe in being transparent about what we built ourselves and what we stood on.
 
-**AI coding assistants:** We used AI coding assistants (including OpenCode/Kimi) to help debug, refactor, and draft documentation. All generated code was reviewed, tested, and adapted by the team before being committed.
+**AI coding assistants:** We used AI coding assistants (including OpenCode/Kimi and Claude Code) to help debug, refactor, and draft documentation. All generated code was reviewed, tested, and adapted by the team before being committed.
 
 **Open-source and third-party software:**
 - **React 19, Vite, Tailwind CSS 4, Lucide icons** — frontend framework, build tooling, styling, and icons.
